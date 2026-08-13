@@ -2,153 +2,153 @@ import { logger } from '../utils/logger.js';
 
 export const botConfig = {
   // =========================
-  // PRÉSENCE DU BOT (ce que les utilisateurs voient sous le nom du bot)
+  // BOT PRESENCE (what users see under the bot name)
   // =========================
-  // Options de `status` :
-  // - "online"    = point vert
-  // - "idle"      = lune jaune
-  // - "dnd"       = ne pas déranger rouge
-  // - "invisible" = apparaît hors ligne
+  // `status` options:
+  // - "online"    = green dot
+  // - "idle"      = yellow moon
+  // - "dnd"       = red do-not-disturb
+  // - "invisible" = appears offline
   presence: {
-    // État en ligne actuel affiché sur Discord.
+    // Current online state shown on Discord.
     status: "online",
 
-    // Lignes d'activité affichées sous le nom du bot.
-    // Correspondance des types numériques de Discord :
-    // 0 = Joue à
-    // 1 = Streame
-    // 2 = Écoute
-    // 3 = Regarde
-    // 4 = Personnalisé
-    // 5 = Participe à
+    // Activity lines shown under the bot name.
+    // `type` number mapping from Discord:
+    // 0 = Playing
+    // 1 = Streaming
+    // 2 = Listening
+    // 3 = Watching
+    // 4 = Custom
+    // 5 = Competing
     activities: [
       {
-        name: "Statut personnalisé", // requis par l'API Discord, non affiché dans le client
-        state: "Nyxis on top les frere",     // c'est ce que les gens voient réellement
-        type: 4,                     // Personnalisé
+        name: "Custom Status", // required by Discord API, not shown in the client
+        state: "stalking",     // this is what people actually see
+        type: 4,               // Custom
       },
     ],
   },
 
   // =========================
-  // COMPORTEMENT DES COMMANDES
+  // COMMAND BEHAVIOR
   // =========================
   commands: {
-    // IDs utilisateur des propriétaires du bot (séparés par des virgules dans la variable d'environnement OWNER_IDS).
-    // Les propriétaires ont accès aux commandes de niveau propriétaire/administrateur.
+    // Bot owner user IDs (comma-separated in OWNER_IDS env var).
+    // Owners can access owner/admin-level bot commands.
     owners: process.env.OWNER_IDS?.split(",").map((id) => id.trim()).filter(Boolean) || [],
 
-    // Temps d'attente par défaut entre chaque utilisation d'une commande (en secondes).
+    // Default wait time between command uses (in seconds).
     defaultCooldown: 3,
 
-    // Si vrai, les anciennes commandes sont supprimées avant d'être réenregistrées.
+    // If true, old commands are removed before re-registering.
     deleteCommands: false,
 
-    // ID de serveur optionnel conservé pour la compatibilité des tutoriels ; non utilisé pour l'enregistrement des commandes.
+    // Optional server ID retained for tutorial compatibility; not used for command registration.
     testGuildId: process.env.TEST_GUILD_ID,
 
-    // Quand défini sur true (ou MAINTENANCE_MODE=true), seuls les propriétaires du bot peuvent exécuter des commandes.
+    // When true (or MAINTENANCE_MODE=true), only bot owners can run commands.
     maintenanceMode: process.env.MAINTENANCE_MODE === "true",
 
-    // Préfixe de commande pour les commandes textuelles (par exemple, "!" pour "!ping").
-    // Prend en charge à la fois les commandes slash et les commandes textuelles.
+    // Command prefix for text-based commands (e.g., "!" for "!ping").
+    // Supports both slash commands and prefix commands.
     prefix: process.env.PREFIX || "!",
   },
 
   // =========================
-  // SYSTÈME DE CANDIDATURES
+  // APPLICATIONS SYSTEM
   // =========================
   applications: {
-    // Questions par défaut affichées lorsqu'un utilisateur remplit une candidature.
+    // Default questions shown when someone fills out an application.
     defaultQuestions: [
-      { question: "Quel est votre nom ?", required: true },
-      { question: "Quel âge avez-vous ?", required: true },
-      { question: "Pourquoi souhaitez-vous nous rejoindre ?", required: true },
+      { question: "What is your name?", required: true },
+      { question: "How old are you?", required: true },
+      { question: "Why do you want to join?", required: true },
     ],
 
-    // Couleurs des embeds selon le statut de la candidature.
+    // Embed colors by application status.
     statusColors: {
-      pending: "#2b2d31",
-      approved: "#2b2d31",
-      denied: "#2b2d31",
+      pending: "#FFA500",
+      approved: "#00FF00",
+      denied: "#FF0000",
     },
 
-    // Temps d'attente requis avant qu'un utilisateur puisse soumettre une nouvelle candidature (en heures).
+    // How long users must wait before submitting another application (hours).
     applicationCooldown: 24,
 
-    // Suppression automatique des candidatures refusées après ce nombre de jours.
+    // Auto-delete denied applications after this many days.
     deleteDeniedAfter: 7,
 
-    // Suppression automatique des candidatures acceptées après ce nombre de jours.
+    // Auto-delete approved applications after this many days.
     deleteApprovedAfter: 30,
 
-    // IDs de rôles autorisés à gérer les candidatures.
-    managerRoles: [], // Sera rempli depuis l'environnement ou la base de données
+    // Role IDs allowed to manage applications.
+    managerRoles: [], // Will be populated from environment or database
   },
 
   // =========================
-  // COULEURS DES EMBEDS & IDENTITÉ VISUELLE
+  // EMBED COLORS & BRANDING
   // =========================
-  // IMPORTANT : C'est la SOURCE UNIQUE DE VÉRITÉ pour toutes les couleurs du bot
+  // IMPORTANT: This is the SINGLE SOURCE OF TRUTH for all bot colors
   embeds: {
     colors: {
-      // Couleurs principales de la marque.
-      primary: "#2b2d31",
-      secondary: "#2b2d31",
+      // Main brand colors.
+      primary: "#336699",
+      secondary: "#2F3136",
 
-      // Couleurs de statut standard pour les messages de succès, d'erreur, d'avertissement et d'information.
-      success: "#2b2d31",
-      error: "#2b2d31",
-      warning: "#2b2d31",
-      info: "#2b2d31",
+      // Standard status colors for success/error/warning/info messages.
+      success: "#57F287",
+      error: "#ED4245",
+      warning: "#FEE75C",
+      info: "#3498DB",
 
-      // Couleurs utilitaires neutres.
-      light: "#2b2d31",
-      dark: "#2b2d31",
-      gray: "#2b2d31",
+      // Neutral utility colors.
+      light: "#FFFFFF",
+      dark: "#202225",
+      gray: "#99AAB5",
 
-      // Raccourcis de la palette de style Discord.
-      blurple: "#2b2d31",
-      green: "#2b2d31",
-      yellow: "#2b2d31",
-      fuchsia: "#2b2d31",
-      red: "#2b2d31",
-      black: "#2b2d31",
+      // Discord-style palette shortcuts.
+      blurple: "#5865F2",
+      green: "#57F287",
+      yellow: "#FEE75C",
+      fuchsia: "#EB459E",
+      red: "#ED4245",
+      black: "#000000",
 
-      // Couleurs spécifiques aux fonctionnalités.
+      // Feature-specific colors.
       giveaway: {
-        active: "#2b2d31",
-        ended: "#2b2d31",
+        active: "#57F287",
+        ended: "#ED4245",
       },
       ticket: {
-        open: "#2b2d31",
-        claimed: "#2b2d31",
-        closed: "#2b2d31",
-        pending: "#2b2d31",
+        open: "#57F287",
+        claimed: "#FAA61A",
+        closed: "#ED4245",
+        pending: "#99AAB5",
       },
-      economy: "#2b2d31",
-      birthday: "#2b2d31",
-      moderation: "#2b2d31",
+      economy: "#F1C40F",
+      birthday: "#E91E63",
+      moderation: "#9B59B6",
 
-      // Correspondance des couleurs selon la priorité des tickets.
+      // Ticket priority color mapping.
       priority: {
-        none: "#2b2d31",
-        low: "#2b2d31",
-        medium: "#2b2d31",
-        high: "#2b2d31",
-        urgent: "#2b2d31",
+        none: "#95A5A6",
+        low: "#3498db",
+        medium: "#2ecc71",
+        high: "#f1c40f",
+        urgent: "#e74c3c",
       },
     },
     footer: {
-      // Texte de pied de page par défaut utilisé dans les embeds du bot.
+      // Default footer text used in bot embeds.
       text: "Titan Bot",
-      // URL de l'icône du pied de page (null = aucune icône).
+      // Footer icon URL (null = no icon).
       icon: null,
     },
-    // URL de miniature par défaut pour les embeds (null = aucune miniature).
+    // Default thumbnail URL for embeds (null = no thumbnail).
     thumbnail: null,
     author: {
-      // Bloc d'auteur d'embed par défaut optionnel.
+      // Optional default embed author block.
       name: null,
       icon: null,
       url: null,
@@ -156,36 +156,36 @@ export const botConfig = {
   },
 
   // =========================
-  // PARAMÈTRES DE L'ÉCONOMIE
+  // ECONOMY SETTINGS
   // =========================
   economy: {
     currency: {
-      // Nom d'affichage de la monnaie.
-      name: "pièces",
-      // Nom d'affichage au pluriel.
-      namePlural: "pièces",
-      // Symbole de la monnaie affiché avec les soldes.
+      // Currency display name.
+      name: "coins",
+      // Plural display name.
+      namePlural: "coins",
+      // Currency symbol shown in balances.
       symbol: "$",
     },
 
-    // Solde de départ pour les nouveaux utilisateurs.
+    // Starting balance for new users.
     startingBalance: 0,
 
-    // Montant maximal de la banque avant améliorations (si les améliorations sont utilisées).
+    // Maximum bank amount before upgrades (if upgrades are used).
     baseBankCapacity: 100000,
 
-    // Montant de la récompense quotidienne.
+    // Daily reward amount.
     dailyAmount: 100,
 
-    // Plage de gain aléatoire pour la commande de travail.
+    // Work command random payout range.
     workMin: 10,
     workMax: 100,
 
-    // Plage de gain aléatoire pour la commande de mendicité.
+    // Beg command random payout range.
     begMin: 5,
     begMax: 50,
 
-    // Temps de rechargement des commandes (en millisecondes).
+    // Command cooldowns (milliseconds).
     cooldowns: {
       daily: 24 * 60 * 60 * 1000,
       work: 60 * 60 * 1000,
@@ -193,235 +193,237 @@ export const botConfig = {
       rob: 4 * 60 * 60 * 1000,
     },
 
-    // Chance de réussite lors d'un vol (0.4 = 40%).
+    // Chance to succeed when robbing (0.4 = 40%).
     robSuccessRate: 0.4,
 
-    // Temps passé en prison après un vol raté (en millisecondes).
-    // 3600000 = 1 heure.
+    // Jail time after failed rob (milliseconds).
+    // 3600000 = 1 hour.
     robFailJailTime: 3600000,
   },
 
   // =========================
-  // PARAMÈTRES DE LA BOUTIQUE
+  // SHOP SETTINGS
   // =========================
+  // Add shop defaults here when needed.
   shop: {
 
   },
 
   // =========================
-  // SYSTÈME DE TICKETS
+  // TICKET SYSTEM
   // =========================
   tickets: {
-    // ID de la catégorie où les nouveaux tickets sont créés (null = aucune catégorie forcée).
+    // Category ID where new tickets are created (null = no forced category).
     defaultCategory: null,
 
-    // IDs de rôles autorisés à gérer/supporter les tickets.
+    // Role IDs allowed to manage/support tickets.
     supportRoles: [],
 
-    // Options de priorité que les utilisateurs/le staff peuvent attribuer.
+    // Priority options users/staff can assign.
     priorities: {
       none: {
         emoji: "⚪",
-        color: "#2b2d31",
-        label: "Aucune",
+        color: "#95A5A6",
+        label: "None",
       },
       low: {
         emoji: "🟢",
-        color: "#2b2d31",
-        label: "Faible",
+        color: "#2ECC71",
+        label: "Low",
       },
       medium: {
         emoji: "🟡",
-        color: "#2b2d31",
-        label: "Moyenne",
+        color: "#F1C40F",
+        label: "Medium",
       },
       high: {
         emoji: "🔴",
-        color: "#2b2d31",
-        label: "Haute",
+        color: "#E74C3C",
+        label: "High",
       },
       urgent: {
         emoji: "🚨",
-        color: "#2b2d31",
-        label: "Urgente",
+        color: "#E91E63",
+        label: "Urgent",
       },
     },
 
-    // Priorité par défaut pour les nouveaux tickets.
+    // Default priority for new tickets.
     defaultPriority: "none",
 
-    // ID de la catégorie où les tickets fermés sont archivés.
+    // Category ID where closed tickets are archived.
     archiveCategory: null,
 
-    // ID du salon où les journaux (logs) des tickets sont envoyés.
+    // Channel ID where ticket logs are sent.
     logChannel: null,
   },
 
   // =========================
-  // PARAMÈTRES DES CADEAUX (GIVEAWAYS)
+  // GIVEAWAY SETTINGS
   // =========================
   giveaways: {
-    // Durée par défaut d'un giveaway en millisecondes.
-    // 86400000 = 24 heures.
+    // Default giveaway duration in milliseconds.
+    // 86400000 = 24 hours.
     defaultDuration: 86400000,
 
-    // Plage autorisée pour le nombre de gagnants.
+    // Allowed winner count range.
     minimumWinners: 1,
     maximumWinners: 10,
 
-    // Plage de durée autorisée pour un giveaway en millisecondes.
+    // Allowed giveaway duration range in milliseconds.
     // 300000 = 5 minutes.
     minimumDuration: 300000,
-    // 2592000000 = 30 jours.
+    // 2592000000 = 30 days.
     maximumDuration: 2592000000,
 
-    // IDs de rôles autorisés à organiser des giveaways.
+    // Role IDs allowed to host giveaways.
     allowedRoles: [],
 
-    // IDs de rôles qui contournent les restrictions des giveaways.
+    // Role IDs that bypass giveaway restrictions.
     bypassRoles: [],
   },
 
   // =========================
-  // PARAMÈTRES DES ANNIVERSAIRES
+  // BIRTHDAY SETTINGS
   // =========================
   birthday: {
-    // ID du rôle attribué aux utilisateurs le jour de leur anniversaire.
+    // Role ID given to users on their birthday.
     defaultRole: null,
 
-    // ID du salon où les annonces d'anniversaire sont publiées.
+    // Channel ID where birthday announcements are posted.
     announcementChannel: null,
 
-    // Fuseau horaire utilisé pour calculer les dates d'anniversaire.
+    // Timezone used to calculate birthday dates.
     timezone: "UTC",
   },
 
   // =========================
-  // PARAMÈTRES DE VÉRIFICATION
+  // VERIFICATION SETTINGS
   // =========================
   verification: {
-    // Message affiché lors de la publication du panneau de vérification.
-    defaultMessage: "Cliquez sur le bouton ci-dessous pour vous vérifier et obtenir l'accès au serveur !",
+    // Message shown when posting the verification panel.
+    defaultMessage: "Click the button below to verify yourself and gain access to the server!",
 
-    // Texte sur le bouton de vérification.
-    defaultButtonText: "Se vérifier",
+    // Text on the verification button.
+    defaultButtonText: "Verify",
 
-    // Comportement de la vérification automatique.
+    // Automatic verification behavior.
     autoVerify: {
-      // Comment la vérification automatique décide qui est pré-approuvé :
-      // - "none"        = tout le monde est vérifié automatiquement immédiatement
-      // - "account_age" = le compte doit être plus ancien que le nombre de jours défini
-      // - "server_size" = vérification automatique uniquement dans les petits serveurs
+      // How automatic verification decides who is auto-approved:
+      // - "none"        = everyone is auto-verified immediately
+      // - "account_age" = account must be older than set days
+      // - "server_size" = auto-verify everyone only in smaller servers
       defaultCriteria: "none",
 
-      // Jours utilisés lorsque `defaultCriteria` est `account_age`.
+      // Days used when `defaultCriteria` is `account_age`.
       defaultAccountAgeDays: 7,
 
-      // Seuil du nombre de membres utilisé lorsque `defaultCriteria` est `server_size`.
-      // Exemple : 1000 signifie une vérification automatique si le serveur a moins de 1000 membres.
+      // Member count threshold used when `defaultCriteria` is `server_size`.
+      // Example: 1000 means auto-verify if server has fewer than 1000 members.
       serverSizeThreshold: 1000,
 
-      // Limites de sécurité autorisées pour les exigences d'âge du compte.
+      // Allowed safety limits for account-age requirements.
+      // 1 = minimum day, 365 = maximum days.
       minAccountAge: 1,
       maxAccountAge: 365,
 
-      // Si vrai, l'utilisateur reçoit un MP après sa vérification.
+      // If true, user receives a DM after verification.
       sendDMNotification: true,
 
-      // Descriptions lisibles par l'homme pour chaque mode de critère.
+      // Human-readable descriptions for each criteria mode.
       criteria: {
-        account_age: "Le compte doit être plus ancien que le nombre de jours spécifié",
-        server_size: "Tous les utilisateurs si le serveur compte moins de 1000 membres",
-        none: "Tous les utilisateurs immédiatement"
+        account_age: "Account must be older than specified days",
+        server_size: "All users if server has less than 1000 members",
+        none: "All users immediately"
       }
     },
 
-    // Temps minimal entre les tentatives de vérification (en millisecondes).
-    // 5000 = 5 secondes.
+    // Minimum time between verification attempts (milliseconds).
+    // 5000 = 5 seconds.
     verificationCooldown: 5000,
 
-    // Nombre maximal de tentatives échouées autorisées dans la fenêtre de temps ci-dessous.
+    // Maximum failed attempts allowed inside the time window below.
     maxVerificationAttempts: 3,
 
-    // Fenêtre de temps pour compter les tentatives (en millisecondes).
+    // Time window for counting attempts (milliseconds).
     // 60000 = 1 minute.
     attemptWindow: 60000,
 
-    // Limites de sécurité en mémoire (aide à éviter une croissance incontrôlée de la mémoire).
+    // In-memory safety limits (helps avoid unbounded memory growth).
     maxCooldownEntries: 10000,
     maxAttemptEntries: 10000,
-    // Fréquence de nettoyage pour les maps de cooldown/tentatives (en millisecondes).
+    // Cleanup frequency for cooldown/attempt maps (milliseconds).
     // 300000 = 5 minutes.
     cooldownCleanupInterval: 300000,
-    // Taille maximale de la charge utile des métadonnées pour les entrées d'audit (en octets).
+    // Maximum metadata payload size for audit entries (bytes).
     maxAuditMetadataBytes: 4096,
-    // Nombre maximal d'entrées d'audit conservées en mémoire.
+    // Maximum number of audit entries kept in memory.
     maxInMemoryAuditEntries: 1000,
-    // Si vrai, enregistre chaque action de vérification dans les logs.
+    // If true, log every verification action.
     logAllVerifications: true,
-    // Si vrai, conserve l'historique d'audit des vérifications.
+    // If true, preserve verification audit history.
     keepAuditTrail: true,
   },
 
   // =========================
-  // MESSAGES DE BIENVENUE / DÉPART
+  // WELCOME / GOODBYE MESSAGES
   // =========================
   welcome: {
-    // Modèle de message de bienvenue publié lorsqu'un utilisateur rejoint le serveur.
-    // Variables disponibles : {user}, {server}, {memberCount}
+    // Welcome template posted when a user joins.
+    // Placeholders: {user}, {server}, {memberCount}
     defaultWelcomeMessage:
-      "Bienvenue à {user} sur {server} ! Nous sommes désormais {memberCount} membres !",
-    // Modèle de message de départ publié lorsqu'un utilisateur quitte le serveur.
-    // Variables disponibles : {user}, {memberCount}
+      "Welcome {user} to {server}! We now have {memberCount} members!",
+    // Goodbye template posted when a user leaves.
+    // Placeholders: {user}, {memberCount}
     defaultGoodbyeMessage:
-      "{user} a quitté le serveur. Nous sommes désormais {memberCount} membres.",
-    // ID du salon pour les messages de bienvenue.
+      "{user} has left the server. We now have {memberCount} members.",
+    // Channel ID for welcome messages.
     defaultWelcomeChannel: null,
-    // ID du salon pour les messages de départ.
+    // Channel ID for goodbye messages.
     defaultGoodbyeChannel: null,
   },
 
   // =========================
-  // SALONS DE COMPTEURS (COUNTERS)
+  // COUNTER CHANNELS
   // =========================
   counters: {
     defaults: {
-      // Modèles de nom/description par défaut pour les entrées de compteurs.
-      name: "Compteur {name}",
-      description: "Compteur de {name} du serveur",
-      // Type de salon utilisé pour les compteurs (généralement "voice").
+      // Default naming/description templates for counter entries.
+      name: "{name} Counter",
+      description: "Server {name} counter",
+      // Channel type used for counters (typically "voice").
       type: "voice",
-      // Format du nom du salon. `{count}` est remplacé automatiquement.
-      channelName: "{name} : {count}",
+      // Channel name format. `{count}` is replaced automatically.
+      channelName: "{name}-{count}",
     },
     permissions: {
-      // Permissions refusées par défaut pour le salon du compteur.
+      // Default denied permissions for the counter channel.
       deny: ["VIEW_CHANNEL"],
-      // Permissions autorisées par défaut pour le salon du compteur.
+      // Default allowed permissions for the counter channel.
       allow: ["VIEW_CHANNEL", "CONNECT", "SPEAK"],
     },
     messages: {
-      // Messages de réponse par défaut pour les actions sur les compteurs.
-      created: "✅ Compteur **{name}** créé avec succès",
-      deleted: "🗑️ Compteur **{name}** supprimé",
-      updated: "🔄 Compteur **{name}** mis à jour",
+      // Default response messages for counter actions.
+      created: "✅ Created counter **{name}**",
+      deleted: "🗑️ Deleted counter **{name}**",
+      updated: "🔄 Updated counter **{name}**",
     },
     types: {
-      // Types de compteurs intégrés et méthode de calcul de chaque décompte.
+      // Built-in counter types and how each count is calculated.
       members: {
-        name: "👥 Membres",
-        description: "Nombre total de membres sur le serveur",
+        name: "👥 Members",
+        description: "Total members in the server",
         getCount: (guild) => guild.memberCount.toString(),
       },
       bots: {
         name: "🤖 Bots",
-        description: "Nombre total de comptes de bots sur le serveur",
+        description: "Total bot accounts in the server",
         getCount: (guild) =>
           guild.members.cache.filter((m) => m.user.bot).size.toString(),
       },
       members_only: {
-        name: "👤 Humains",
-        description: "Nombre total de membres humains (hors bots)",
+        name: "👤 Humans",
+        description: "Total human members (non-bots)",
         getCount: (guild) =>
           guild.members.cache.filter((m) => !m.user.bot).size.toString(),
       },
@@ -429,47 +431,49 @@ export const botConfig = {
   },
 
   // =========================
-  // MESSAGES GÉNÉRIQUES DU BOT
+  // GENERIC BOT MESSAGES
   // =========================
   messages: {
-    noPermission: "Vous n'avez pas la permission d'utiliser cette commande.",
-    cooldownActive: "Veuillez patienter {time} avant d'utiliser cette commande à nouveau.",
-    errorOccurred: "Une erreur est survenue lors de l'exécution de cette commande.",
-    missingPermissions: "Il me manque les permissions requises pour effectuer cette action.",
-    commandDisabled: "Cette commande a été désactivée.",
-    maintenanceMode: "Le bot est actuellement en mode maintenance.",
+    noPermission: "You do not have permission to use this command.",
+    cooldownActive: "Please wait {time} before using this command again.",
+    errorOccurred: "An error occurred while executing this command.",
+    missingPermissions:
+      "I am missing required permissions to perform this action.",
+    commandDisabled: "This command has been disabled.",
+    maintenanceMode: "The bot is currently in maintenance mode.",
   },
 
   // =========================
-  // BASCULES DE FONCTIONNALITÉS (FEATURE TOGGLES)
+  // FEATURE TOGGLES
   // =========================
-  // Définissez n'importe quelle fonctionnalité sur `false` pour la désactiver globalement.
+  // Set any feature to `false` to disable it globally.
   features: {
-    // Systèmes principaux.
+    // Core systems.
     economy: true,
     leveling: true,
     moderation: true,
     logging: true,
     welcome: true,
 
-    // Systèmes d'engagement communautaire.
+    // Community engagement systems.
     tickets: true,
     giveaways: true,
     birthday: true,
     counter: true,
 
-    // Systèmes de sécurité et en libre-service.
+    // Security and self-service systems.
     verification: true,
     reactionRoles: true,
     joinToCreate: true,
 
-    // Modules utilitaires et de confort.
+    // Utility/quality-of-life modules.
     voice: true,
     search: true,
     tools: true,
     utility: true,
     community: true,
     fun: true,
+    music: true,
   },
 };
 
@@ -477,35 +481,37 @@ export function validateConfig(config) {
   const errors = [];
 
   if (process.env.NODE_ENV !== 'production') {
-    logger.debug('Vérification des variables d\'environnement :');
-    logger.debug('DISCORD_TOKEN existe :', !!process.env.DISCORD_TOKEN);
-    logger.debug('TOKEN existe :', !!process.env.TOKEN);
-    logger.debug('CLIENT_ID existe :', !!process.env.CLIENT_ID);
-    logger.debug('GUILD_ID existe :', !!process.env.GUILD_ID);
-    logger.debug('POSTGRES_HOST existe :', !!process.env.POSTGRES_HOST);
-    logger.debug('NODE_ENV :', process.env.NODE_ENV);
+    logger.debug('Environment variables check:');
+    logger.debug('DISCORD_TOKEN exists:', !!process.env.DISCORD_TOKEN);
+    logger.debug('TOKEN exists:', !!process.env.TOKEN);
+    logger.debug('CLIENT_ID exists:', !!process.env.CLIENT_ID);
+    logger.debug('GUILD_ID exists:', !!process.env.GUILD_ID);
+    logger.debug('POSTGRES_HOST exists:', !!process.env.POSTGRES_HOST);
+    logger.debug('NODE_ENV:', process.env.NODE_ENV);
   }
 
   if (!process.env.DISCORD_TOKEN && !process.env.TOKEN) {
-    errors.push("Le token du bot est requis (variable d'environnement DISCORD_TOKEN ou TOKEN)");
+    errors.push("Bot token is required (DISCORD_TOKEN or TOKEN environment variable)");
   }
 
   if (!process.env.CLIENT_ID) {
-    errors.push("L'ID client est requis (variable d'environnement CLIENT_ID)");
+    errors.push("Client ID is required (CLIENT_ID environment variable)");
   }
 
   if (process.env.NODE_ENV === 'production') {
+    // A full connection URL (DATABASE_URL / POSTGRES_URL) satisfies all Postgres
+    // requirements, matching how src/config/database/postgres.js resolves the pool config.
     const hasConnectionUrl = Boolean(process.env.POSTGRES_URL || process.env.DATABASE_URL);
 
     if (!hasConnectionUrl) {
       if (!process.env.POSTGRES_HOST) {
-        errors.push("La connexion PostgreSQL est requise en production (définissez DATABASE_URL/POSTGRES_URL ou POSTGRES_HOST)");
+        errors.push("PostgreSQL connection is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_HOST)");
       }
       if (!process.env.POSTGRES_USER) {
-        errors.push("L'utilisateur PostgreSQL est requis en production (définissez DATABASE_URL/POSTGRES_URL ou POSTGRES_USER)");
+        errors.push("PostgreSQL user is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_USER)");
       }
       if (!process.env.POSTGRES_PASSWORD) {
-        errors.push("Le mot de passe PostgreSQL est requis en production (définissez DATABASE_URL/POSTGRES_URL ou POSTGRES_PASSWORD)");
+        errors.push("PostgreSQL password is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_PASSWORD)");
       }
     }
   }
@@ -515,7 +521,7 @@ export function validateConfig(config) {
 
 const configErrors = validateConfig(botConfig);
 if (configErrors.length > 0) {
-  logger.error("Erreurs de configuration du bot :", configErrors.join("\n"));
+  logger.error("Bot configuration errors:", configErrors.join("\n"));
   if (process.env.NODE_ENV === "production") {
     process.exit(1);
   }
@@ -533,6 +539,7 @@ const COMMAND_CATEGORY_FEATURE_MAP = {
   leveling: "leveling",
   logging: "logging",
   moderation: "moderation",
+  music: "music",
   reaction_roles: "reactionRoles",
   search: "search",
   serverstats: "counter",
@@ -614,9 +621,11 @@ export function getDefaultApplicationQuestions() {
   ).filter(Boolean);
 }
 
-export function getColor(path, fallback = "#2b2d31") {
+export function getColor(path, fallback = "#99AAB5") {
+  
   if (typeof path === "number") return path;
   if (typeof path === "string" && path.startsWith("#")) {
+    
     return parseInt(path.replace("#", ""), 16);
   }
   const result = path
